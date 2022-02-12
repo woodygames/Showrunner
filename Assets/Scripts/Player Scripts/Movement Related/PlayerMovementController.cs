@@ -68,6 +68,9 @@ public class PlayerMovementController : MonoBehaviour
         movements.Add(type);
     }
 
+    /// <summary>
+    /// continually checks if the player is colliding with the ground
+    /// </summary>
     public void CheckForGround()
     {
         if (!groundCheck)

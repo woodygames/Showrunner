@@ -14,11 +14,12 @@ public class CameraController : MonoBehaviour
     /// </summary>
     [SerializeField]
     private float distance = 8f;
+
+    [SerializeField]
+    private float angle = 45f;
     /// <summary>
     /// The angle the camera is looking at to the target
     /// </summary>
-    [SerializeField]
-    private float angle = 45f;
     public float Angle
     {
         get

@@ -17,7 +17,7 @@ public class WalkingMovement : MovementType
     }
 
     /// <summary>
-    /// Moves the player in a specific way, depending on the type of movement
+    /// Moves the player two-dimensionally
     /// </summary>
     public override void Move(bool isGrounded)
     {

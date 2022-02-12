@@ -4,20 +4,12 @@ using UnityEngine;
 
 public class PlayerStateController : MonoBehaviour
 {
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    /// <summary>
+    /// Checks for each movement state if a certain condition is met that would change the type of movement
+    /// </summary>
+    /// <param name="state">The current type of movement</param>
+    /// <param name="isGrounded">Tells if the player is on the ground or not</param>
+    /// <returns></returns>
     public MovementState GetState(MovementState state, bool isGrounded)
     {
         MovementState newState = state;

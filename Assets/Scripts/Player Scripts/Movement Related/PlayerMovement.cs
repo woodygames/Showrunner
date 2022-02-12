@@ -58,6 +58,7 @@ public class PlayerMovement : MonoBehaviour
 		camController = Camera.main.GetComponent<CameraController>();
 		controller = GetComponent<CharacterController>();
 
+		// the direction the player should move relative to is dependent on the angle the camera is looking at the player
 		moveTransform = transform;
 		moveTransform.Rotate(Vector3.up, camController.Angle);
 	}
@@ -87,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
     }
 	
 	/// <summary>
-	/// handles 2-dimensional movement, crouching, gravity application and slopes
+	/// handles 2-dimensional movement, running, gravity application and slopes
 	/// </summary>
 	public void Move(bool isGrounded)
 	{
