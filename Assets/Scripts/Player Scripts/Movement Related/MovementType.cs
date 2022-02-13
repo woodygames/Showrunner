@@ -6,11 +6,13 @@ public class MovementType : MonoBehaviour
 {
     public MovementState changeTo;
 
+    protected PlayerInput input;
     protected PlayerMovement playerMovement;
     protected PlayerMovementController movementController;
 
     protected void Start()
     {
+        input = PlayerInput.singleton;
         playerMovement = GetComponent<PlayerMovement>();
         movementController = GetComponent<PlayerMovementController>();
         movementController.AddMovementType(this);

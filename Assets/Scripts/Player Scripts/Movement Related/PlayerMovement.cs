@@ -60,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
 
 		// the direction the player should move relative to is dependent on the angle the camera is looking at the player
 		moveTransform = transform;
-		moveTransform.Rotate(Vector3.up, camController.Angle);
+		//moveTransform.Rotate(Vector3.up, camController.Angle);
 	}
 
     private void Update()
@@ -139,6 +139,11 @@ public class PlayerMovement : MonoBehaviour
 		if(appliedGravity > 0) direction.y += gravity * Time.deltaTime * appliedGravity;
 		controller.Move(direction * runSpeed * Time.deltaTime);
 	}
+
+	public void MoveInstantaniously(Vector3 direction)
+    {
+		controller.Move(direction);
+    }
 	
 	bool OnSlope()
 	{

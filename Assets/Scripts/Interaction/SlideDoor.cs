@@ -7,13 +7,20 @@ public class SlideDoor : Interactable, Observer
     [SerializeField]
     private Interactable[] interactables;
 
+   
+
     private bool unlocked = false;
+    private bool opened = false;
     
     void Start()
     {
         foreach(Interactable interactable in interactables)
         {
             interactable.SetObserver(this);
+        }
+        if(interactables.Length == 0)
+        {
+            unlocked = true;
         }
     }
 
@@ -28,10 +35,18 @@ public class SlideDoor : Interactable, Observer
 
     public override void Trigger()
     {
+        float distance = Vector3.Distance(GameObject.FindGameObjectWithTag("Player").transform.position, gameObject.transform.position);
+        if (distance > range) return;
+        if (opened) return;
+        
         Debug.Log("door wurde unlocked: " + unlocked);
         if (unlocked)
         {
             OpenDoor();
+        }
+        else
+        {
+            gameObject.GetComponent<DoorAudioController>().PlaySound(DoorSound.deny);
         }
     }
 
@@ -45,16 +60,20 @@ public class SlideDoor : Interactable, Observer
                 canOpen = false;
             }
         }
-
         unlocked = canOpen;
     }
 
 
     private void OpenDoor()
     {
-        Renderer renderer = this.gameObject.GetComponent<Renderer>();
+        if (opened) return;
+         opened = true;
+        BoxCollider collider = GetComponent<BoxCollider>();
+        collider.enabled = false;
+        Animator animator = GetComponent<Animator>();
+        animator.SetBool("closed", false);
 
-        renderer.material.SetColor("_Color", Color.green);
+        
         Debug.Log("slide sounds");
         //Destroy(this.gameObject);
     }

@@ -46,11 +46,13 @@ GameObject:
   - component: {fileID: 3998598383730459242}
   - component: {fileID: 721065779302168162}
   - component: {fileID: 2709616792475119018}
+  - component: {fileID: 7172544295528058271}
+  - component: {fileID: 6099664548608724947}
   - component: {fileID: 2371564611804957160}
   - component: {fileID: 7003087047776092524}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -119,7 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravity: -9.81
-  walkSpeed: 8
+  walkSpeed: 2.76
   runSpeed: 16
   slopeForce: 5
   slopeForceRayLength: 2
@@ -136,6 +138,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c06b5347f18aa5749813e0fbbc6c179f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ladderLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  ladderDistance: 0.5
+  maxDashes: 3
+  dashRefillTime: 1
 --- !u!114 &3998598383730459242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,6 +183,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   changeTo: 2
+--- !u!114 &7172544295528058271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2304891415382035296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdb0f5f67c320e04e93a94774e780c52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  changeTo: 3
+  climbingOffset: 0.2
+  speedMultiplier: 0.5
+--- !u!114 &6099664548608724947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2304891415382035296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7911624bd3520f24b9927e0063ac8a53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  changeTo: 4
+  dashForce: 10.32
+  dashDuration: 0.16
 --- !u!114 &2371564611804957160
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -36,14 +36,14 @@ public class HighLightController : MonoBehaviour
             if (!newLookAt.Equals(lookAt))
             {
                 Debug.Log("Showing Outline");
-                if(lookAt.GetComponent<Outline>() != null) lookAt.GetComponent<Outline>().enabled = false;
+                if(lookAt.GetComponent<Outline>() != null) lookAt.GetComponent<Outline>().SetOutline(false);
                 lookAt = newLookAt;
-                if (lookAt.GetComponent<Outline>() != null) lookAt.GetComponent<Outline>().enabled = true;
+                if (lookAt.GetComponent<Outline>() != null) lookAt.GetComponent<Outline>().SetOutline(true);
                 
             }
             else
             {
-                if (lookAt.GetComponent<Outline>() != null) lookAt.GetComponent<Outline>().enabled = true;
+                if (lookAt.GetComponent<Outline>() != null) lookAt.GetComponent<Outline>().SetOutline(true);
             }
         }
     }
