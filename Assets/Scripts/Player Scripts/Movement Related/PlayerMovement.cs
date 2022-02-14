@@ -99,7 +99,7 @@ public class PlayerMovement : MonoBehaviour
 		
 		if(!isGrounded) speed = lastSpeed;
 
-		Vector3 move = moveTransform.right * input.horizontal + moveTransform.forward * input.vertical;
+		Vector3 move = Vector3.right * input.horizontal + Vector3.forward * input.vertical;
 		
 		controller.Move(move * speed * Time.deltaTime);
 		
@@ -123,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
 	/// </summary>
 	public void SimpleMove()
 	{
-		Vector3 move = moveTransform.right * input.horizontal + moveTransform.forward * input.vertical;
+		Vector3 move = Vector3.right * input.horizontal + Vector3.forward * input.vertical;
 		
 		controller.Move(move * speed/2f * Time.deltaTime);
 
@@ -140,9 +140,14 @@ public class PlayerMovement : MonoBehaviour
 		controller.Move(direction * runSpeed * Time.deltaTime);
 	}
 
-	public void MoveInstantaniously(Vector3 direction)
+	/// <summary>
+	/// method for instant movement, simulating a teleportation.
+	/// When an obstacle is blocking the path, the player will move to the obstacle, not the target!
+	/// </summary>
+	/// <param name="target">The target position of the teleportation</param>
+	public void MoveInstantaniously(Vector3 target)
     {
-		controller.Move(direction);
+		controller.Move(target - transform.position);
     }
 	
 	bool OnSlope()

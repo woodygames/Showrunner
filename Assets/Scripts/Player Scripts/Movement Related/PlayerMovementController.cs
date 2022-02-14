@@ -4,17 +4,26 @@ using UnityEngine;
 
 public class PlayerMovementController : MonoBehaviour
 {
+    #region Variables
+    [Tooltip("A gameObject on the bottom of the player's body, used for checking ground collision.")]
     [SerializeField]
     private Transform groundCheck;
+    [Tooltip("Ground detection is done spherically with the groundCheck's position as the center and this variable as the sphere's radius.")]
     [SerializeField]
     private float checkRadius = 0.4f;
+    [Tooltip("The layer used for detecting ground.")]
     [SerializeField]
     private LayerMask groundLayer;
 
+    // Is the player on the ground?
     private bool isGrounded;
+    // A list containing all different types of movement
     private List<MovementType> movements;
+    // A controller used for calculating the type of movement to be executed
     private PlayerStateController stateController;
+    // The state of the current movement type
     private MovementState state;
+    #endregion
 
     #region Main Methods
     private void Awake()
@@ -34,6 +43,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         CheckForGround();
         ChooseMovement();
+        LookAtCursor();
     }
     #endregion
 
@@ -74,6 +84,19 @@ public class PlayerMovementController : MonoBehaviour
 
         isGrounded = Physics.CheckSphere(groundCheck.position, checkRadius, groundLayer);
     }
+
+    /// <summary>
+    /// Accesses the cursor's position inside the scene and looks towards it
+    /// </summary>
+    public void LookAtCursor()
+    {
+        RaycastHit hit = Camera.main.GetComponent<CameraController>().GetCursorHit();
+        if (hit.point == null)
+            return;
+
+        Vector3 heightenedHit = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+        transform.LookAt(heightenedHit);
+    }
     #endregion
 
     #region Gizmo Methods
@@ -82,6 +105,20 @@ public class PlayerMovementController : MonoBehaviour
         // Draw sphere that shows ground collision
         Gizmos.color = isGrounded ? Color.green : Color.red;
         Gizmos.DrawSphere(groundCheck.position, checkRadius);
+    }
+    #endregion
+
+    #region Getters and Setters
+    /// <returns>The current movement type of the player</returns>
+    public MovementState GetState()
+    {
+        return state;
+    }
+
+    /// <returns>The rotation of the player</returns>
+    public Quaternion GetRotation()
+    {
+        return transform.rotation;
     }
     #endregion
 }

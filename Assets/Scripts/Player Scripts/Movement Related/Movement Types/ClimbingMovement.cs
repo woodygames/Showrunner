@@ -7,10 +7,9 @@ public class ClimbingMovement : MovementType
     [Tooltip("Specifies how far the player is away from the ladder.")]
     [SerializeField]
     private float climbingOffset = 0.8f;
+    [Tooltip("Climbing speed should be slower than walking speed; this float specifies the fraction")]
     [SerializeField]
-    private float speedMultiplier = 0.5f;
-
-    private GameObject ladder;
+    private float speedFraction = 0.5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,19 +22,25 @@ public class ClimbingMovement : MovementType
         
     }
 
+    /// <summary>
+    /// Moves the player two-dimensionally, but on the x-y-plane
+    /// </summary>
+    /// <param name="isGrounded">Indicates if the player is on the ground</param>
     public override void Move(bool isGrounded)
     {
         Vector3 move = transform.right * input.horizontal + transform.up * input.vertical;
 
-        playerMovement.Move(move * speedMultiplier, 0);
+        playerMovement.Move(move * speedFraction, 0);
     }
 
+    /// <summary>
+    /// Teleports the player to a position in front of the ladder
+    /// </summary>
+    /// <param name="ladder"></param>
     public void Prepare(GameObject ladder)
-    {
-        this.ladder = ladder;
-
+    { 
         Vector3 climbingPosition = ladder.transform.position - ladder.transform.forward * climbingOffset;
 
-        playerMovement.MoveInstantaniously(climbingPosition - transform.position);
+        playerMovement.MoveInstantaniously(climbingPosition);
     }
 }
