@@ -12,22 +12,17 @@ public class Lever : Interactable
     
     public override void Trigger()
     {
-       
+        float distance = Vector3.Distance(GameObject.FindGameObjectWithTag("Player").transform.position, gameObject.transform.position);
+        if (distance > range) return;
         triggered = !triggered;
-        Renderer renderer = this.gameObject.GetComponent<Renderer>();
 
-        if (triggered)
-        {
-            renderer.material.SetColor("_Color", Color.green);
-        }
-        else
-        {
-            renderer.material.SetColor("_Color", Color.red);
-        }
+        Animator animator = GetComponent<Animator>();
+        animator.SetBool("triggered", triggered);
+
+        gameObject.GetComponent<AudioSource>().Play();
         
         NotifyAllObservers();
         Debug.Log(triggered);
-
     }
 
     public override bool GetPass()

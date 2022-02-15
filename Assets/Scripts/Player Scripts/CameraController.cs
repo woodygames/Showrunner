@@ -14,19 +14,11 @@ public class CameraController : MonoBehaviour
     /// </summary>
     [SerializeField]
     private float distance = 8f;
-
-    [SerializeField]
-    private float angle = 45f;
     /// <summary>
     /// The angle the camera is looking at to the target
     /// </summary>
-    public float Angle
-    {
-        get
-        {
-            return angle;
-        }
-    }
+    [SerializeField]
+    private float angle = 45f;
 
     /// <summary>
     /// The target to be looked at
@@ -50,7 +42,7 @@ public class CameraController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         HandleCamera();
     }
@@ -71,18 +63,10 @@ public class CameraController : MonoBehaviour
 
         Vector3 finalPosition = rotatedPosition + target.position;
 
-        Vector3 flatTargetPosition = target.position;
-        flatTargetPosition.y = 0f;
-
-        transform.position = Vector3.SmoothDamp(transform.position, finalPosition, ref refVelocity, smoothTime);
-
         transform.LookAt(target.position);
+        transform.position = Vector3.SmoothDamp(transform.position, finalPosition, ref refVelocity, smoothTime);
     }
 
-    /// <summary>
-    /// Shoots a ray from the camera to the cursor's position and returns the hit info
-    /// </summary>
-    /// <returns>The Raycast hit info</returns>
     public RaycastHit GetCursorHit()
     {
         // todo: check whether the cursor is on an UI element

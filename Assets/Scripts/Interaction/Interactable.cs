@@ -4,9 +4,12 @@ using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour
 {
-    private LinkedList<Observer> observers = new LinkedList<Observer>();
+    protected LinkedList<Observer> observers = new LinkedList<Observer>();
 
-   
+    [SerializeField]
+    protected float range;
+
+
     public void SetObserver(Observer o)
     {
         observers.AddLast(o);
