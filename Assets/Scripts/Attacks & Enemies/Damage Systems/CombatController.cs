@@ -33,7 +33,6 @@ public class CombatController : MonoBehaviour
         switchWeapons();
     }
 
-    //CALL IN UPDATE
     //Method to check the overall Inputs concerning combat
     public void CombatInput()
     {
