@@ -60,14 +60,44 @@ public class EnemyController : MonoBehaviour
     //Update once per frame
     private void Update()
     {
+        Debug.Log(isVisible());
+        Debug.Log("C: "+inCombat);
+        agent.isStopped = false;
         //Check if the player is detected and set status accordingly
         float distance = Vector3.Distance(player.transform.position, gameObject.transform.position);
         if (isVisible() || isInRange()&&!inCombat)
         {
             inCombat = true;
         }
-        else if (inCombat)
+
+        if (inCombat && !isVisible())
         {
+            if (distance > pursueRadius)
+            {
+                inCombat = false;
+            }
+            else
+            {
+                if (!isVisible())
+                {
+                    point = player.transform.position;
+                    agent.SetDestination(point);
+                }
+                else
+                {
+                    point = GetNextPoint(distance);
+                    agent.SetDestination(point);
+                }
+                
+            }
+        }
+
+        else if (inCombat&& isVisible())
+        {
+            if (distance < maxEngagementDistance)
+            {
+                agent.isStopped = true;
+            }
             if(distance> pursueRadius)
             {
                 inCombat = false;
@@ -78,6 +108,7 @@ public class EnemyController : MonoBehaviour
                 agent.SetDestination(point);
             }
         }
+        
 
         //turn to the player if in combat and not moving
         if (inCombat && agent.velocity.magnitude <= 0.01f)
@@ -124,18 +155,18 @@ public class EnemyController : MonoBehaviour
         {
             playerVector = playerVector.normalized * maxEngagementDistance * 0.4f;
         }
-        if (isRangedWeapon && distance <= maxEngagementDistance)
+        else if (isRangedWeapon && distance <= maxEngagementDistance)
         {
             playerVector = transform.position;
             
         }
-        if(!isRangedWeapon)
+        else if(!isRangedWeapon)
         {
-            playerVector -= playerVector.normalized*maxEngagementDistance*0.9f;
+            playerVector -= playerVector.normalized*maxEngagementDistance*0.5f;
         }
         playerVector += transform.position;
         NavMeshHit hit;
-        NavMesh.SamplePosition(playerVector, out hit, maxEngagementDistance * 0.4f, 1);
+        NavMesh.SamplePosition(playerVector, out hit, 0.0f, 1);
         Vector3 finalPosition = hit.position;
         return finalPosition;
 
@@ -159,7 +190,10 @@ public class EnemyController : MonoBehaviour
         {
             return true;
         }
-        return false;
+        else
+        {
+            return false;
+        }
     }
 
     //check if the enemy can see the player
@@ -168,13 +202,28 @@ public class EnemyController : MonoBehaviour
         Ray ray = new Ray(eyePosition.position,player.transform.position-eyePosition.position);
         RaycastHit hit;
         if(Physics.Raycast(ray, out hit, attentionDistance))
-        {
-            if (hit.collider.gameObject.GetComponent<CombatController>()&& Vector3.Distance(player.transform.position, gameObject.transform.position) < attentionDistance&&Vector3.Angle(player.transform.position-transform.position,transform.forward)< attentionAngle/2)
+        { 
+            if (hit.collider.gameObject.GetComponent<CombatController>()&& Vector3.Distance(player.transform.position, gameObject.transform.position) <= attentionDistance&&Vector3.Angle(player.transform.position-transform.position,transform.forward)<= attentionAngle/2)
             {
                 return true;
             }
+            else
+            {
+                return false;
+            }
         }
-        return false;
+        else
+            return false;
+    }
+
+    //method for checking if the enemy is ready to fire, called by enemy Combat script
+    public bool readyToFire()
+    {
+        float distance = Vector3.Distance(player.transform.position, gameObject.transform.position);
+        if (isVisible() &&distance<maxEngagementDistance&& Vector3.Angle(player.transform.position - transform.position, transform.forward)<1.0f)
+            return true;
+        else
+            return false;
     }
 
     void OnDrawGizmosSelected()
