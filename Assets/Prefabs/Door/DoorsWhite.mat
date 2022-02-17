@@ -32,6 +32,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - BaseColorTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -89,6 +93,23 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - OutlineAcuteDepthThreshold: 2
+    - OutlineAcuteStartDot: 0.95
+    - OutlineDepthStrength: 1
+    - OutlineDepthThightening: 4
+    - OutlineDepthThreshold: 1
+    - OutlineFarNormalEndDepth: 30
+    - OutlineFarNormalStartDepth: 1
+    - OutlineFarNormalThreshold: 8
+    - OutlineNormalStrength: 1
+    - OutlineNormalThightening: 16
+    - OutlineNormalThreshold: 1.4
+    - OutlineThickness: -0.1
+    - Step1: 0.51
+    - Step2: 0.23
+    - Step3: 0
+    - USECOLOR: 1
+    - USESTEPCOLORS: 0
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -102,6 +123,7 @@ Material:
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
+    - _GlossinessSource: 0
     - _GlossyReflections: 0
     - _Metallic: 0
     - _Mode: 0
@@ -109,8 +131,11 @@ Material:
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _Shininess: 0
     - _Smoothness: 0.5
+    - _SmoothnessSource: 0
     - _SmoothnessTextureChannel: 0
+    - _SpecSource: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
@@ -118,6 +143,12 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - BaseColor: {r: 1, g: 1, b: 1, a: 0}
+    - Color1: {r: 1, g: 1, b: 1, a: 0}
+    - Color2: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 0}
+    - Color3: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 0}
+    - Color4: {r: 0.40566036, g: 0.40566036, b: 0.40566036, a: 0}
+    - OutlineColor: {r: 0, g: 1, b: 0.33063266, a: 0}
     - _BaseColor: {r: 0.9411765, g: 0.9411765, b: 0.9411765, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 1053333087221605703}
   - component: {fileID: 6892920188185699436}
   - component: {fileID: 3908155177990570156}
+  - component: {fileID: -2438584989961161426}
+  - component: {fileID: -1681955012452175951}
   m_Layer: 0
   m_Name: Lever
   m_TagString: Untagged
@@ -56,6 +58,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -64,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 17ff5b35b41d8d84a9858b15ac21e94a, type: 2}
+  - {fileID: 2100000, guid: f855fc12c5f13f7448ce0218a1253a49, type: 2}
   - {fileID: 2100000, guid: 773720071c5cb564ea2fef6b2d79906c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -143,7 +146,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 21726402bcfdf284d81eb6662f2c6923, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -229,6 +232,32 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-2438584989961161426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931871601607089819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-1681955012452175951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931871601607089819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60df17bff04d4d34dad8a25f91e1347e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  denySound: {fileID: 8300000, guid: b66b8b485071c854c8024d15a3c3a81d, type: 3}
+  triggerSound: {fileID: 8300000, guid: 21726402bcfdf284d81eb6662f2c6923, type: 3}
 --- !u!1 &3727252212316601586
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,6 +309,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -288,7 +318,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 17ff5b35b41d8d84a9858b15ac21e94a, type: 2}
+  - {fileID: 2100000, guid: f855fc12c5f13f7448ce0218a1253a49, type: 2}
   - {fileID: 2100000, guid: 773720071c5cb564ea2fef6b2d79906c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0

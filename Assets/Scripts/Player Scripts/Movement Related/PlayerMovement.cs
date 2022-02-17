@@ -15,12 +15,12 @@ public class PlayerMovement : MonoBehaviour
 	/// speed of the player while walking
 	/// </summary>
 	[SerializeField]
-	float walkSpeed = 8f;
+	float walkSpeed = 5f;
 	/// <summary>
 	/// speed of the player while running
 	/// </summary>
 	[SerializeField]
-	float runSpeed = 16f;
+	float runSpeed = 10f;
 	/// <summary>
 	/// additional force pulling the player down while on a slope
 	/// </summary>
@@ -101,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
 
 		Vector3 move = Vector3.right * input.horizontal + Vector3.forward * input.vertical;
 		
-		controller.Move(move * speed * Time.deltaTime);
+		controller.Move(move.normalized * speed * Time.deltaTime);
 		
 		if(velocity.x != 0f || velocity.z != 0f)
 		{
@@ -125,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
 	{
 		Vector3 move = Vector3.right * input.horizontal + Vector3.forward * input.vertical;
 		
-		controller.Move(move * speed/2f * Time.deltaTime);
+		controller.Move(move.normalized * speed/2f * Time.deltaTime);
 
 		if (input.horizontal != 0 && input.vertical != 0 && OnSlope())
 			controller.Move(Vector3.down * controller.height / 2 * slopeForce * Time.deltaTime);

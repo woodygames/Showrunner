@@ -18,7 +18,7 @@ public class CameraController : MonoBehaviour
     /// The angle the camera is looking at to the target
     /// </summary>
     [SerializeField]
-    private float angle = 45f;
+    private float angle = -45f;
 
     /// <summary>
     /// The target to be looked at
