@@ -103,6 +103,8 @@ public class CombatController : MonoBehaviour
                 //same as below, optional implementation of object pooling in the future
                 Destroy(currentWeaponModel);
                 currentWeaponModel = Instantiate(rangedWeapon.weaponModel, rangedPosition, false);
+                currentWeaponModel.transform.localPosition = new Vector3(0, 0, 0);
+                currentWeaponModel.transform.localRotation = Quaternion.identity;
             }
         }
         else if(currentWeaponIndex==2)
@@ -111,6 +113,8 @@ public class CombatController : MonoBehaviour
             {
                 Destroy(currentWeaponModel);
                 currentWeaponModel = Instantiate(meleeWeapon.weaponModel, meleePosition, false);
+                currentWeaponModel.transform.localPosition = new Vector3(0, 0, 0);
+                currentWeaponModel.transform.localRotation = Quaternion.identity;
             }
         }
         else

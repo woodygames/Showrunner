@@ -33,13 +33,15 @@ public class EnemyController : MonoBehaviour
 
     //Engagement distance (large for ranged, small for melee)
     [SerializeField]
-    private float maxEngagementDistance;
+    public float maxEngagementDistance;
 
     //true if player is detected
     private bool inCombat=false;
 
     [SerializeField]
     private bool isRangedWeapon;
+
+    private bool isRunning=false;
 
     /// <summary>
     /// general variables
@@ -60,9 +62,9 @@ public class EnemyController : MonoBehaviour
     //Update once per frame
     private void Update()
     {
-        Debug.Log(isVisible());
-        Debug.Log("C: "+inCombat);
+        Debug.Log(agent.isStopped);
         agent.isStopped = false;
+        isInRange();
         //Check if the player is detected and set status accordingly
         float distance = Vector3.Distance(player.transform.position, gameObject.transform.position);
         if (isVisible() || isInRange()&&!inCombat)
@@ -70,7 +72,7 @@ public class EnemyController : MonoBehaviour
             inCombat = true;
         }
 
-        if (inCombat && !isVisible())
+        if (inCombat && !isVisible()&&!isRunning)
         {
             if (distance > pursueRadius)
             {
@@ -92,17 +94,17 @@ public class EnemyController : MonoBehaviour
             }
         }
 
-        else if (inCombat&& isVisible())
+        else if (inCombat&& isVisible()&& !isRunning)
         {
-            if (distance < maxEngagementDistance)
+            if (distance < maxEngagementDistance&&isRangedWeapon)
             {
                 agent.isStopped = true;
             }
-            if(distance> pursueRadius)
+            else if(distance>= pursueRadius)
             {
                 inCombat = false;
             }
-            else
+            else if(distance>=maxEngagementDistance&&distance<pursueRadius)
             {
                 point=GetNextPoint(distance);
                 agent.SetDestination(point);
@@ -123,7 +125,7 @@ public class EnemyController : MonoBehaviour
             Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
 
             // Draw a ray pointing at our target in
-            Debug.DrawRay(transform.position, newDirection, Color.red);
+            //Debug.DrawRay(transform.position, newDirection, Color.red);
 
             // Calculate a rotation a step closer to the target and applies rotation to this object
             transform.rotation = Quaternion.LookRotation(newDirection);
@@ -142,6 +144,29 @@ public class EnemyController : MonoBehaviour
         {
             timer+=Time.deltaTime;
         }
+
+        if (!readyToFire() && distance < minAttentionDistance*0.8f&&isRangedWeapon&&inCombat)
+        {
+            isRunning = true;
+            agent.isStopped = false;
+            point = transform.position - (player.transform.position-transform.position) * 1.3f;
+            agent.SetDestination(point);
+        }
+        else if(distance < minAttentionDistance&&isRangedWeapon)
+        {
+            isRunning = false;
+        }
+
+        if (!isRangedWeapon&& inCombat)
+        {
+            Vector3 playerVector = player.transform.position - transform.position;
+            playerVector -= playerVector.normalized * maxEngagementDistance * 0.5f;
+            playerVector += transform.position;
+            point = playerVector;
+            agent.SetDestination(point);
+
+        }
+
         
 
     }
@@ -188,6 +213,10 @@ public class EnemyController : MonoBehaviour
     {
         if(Vector3.Distance(player.transform.position, gameObject.transform.position)< minAttentionDistance)
         {
+            if (isRangedWeapon)
+            {
+                agent.isStopped = true;
+            }
             return true;
         }
         else
@@ -219,20 +248,24 @@ public class EnemyController : MonoBehaviour
     //method for checking if the enemy is ready to fire, called by enemy Combat script
     public bool readyToFire()
     {
+        //Debug.ClearDeveloperConsole();
         float distance = Vector3.Distance(player.transform.position, gameObject.transform.position);
-        if (isVisible() &&distance<maxEngagementDistance&& Vector3.Angle(player.transform.position - transform.position, transform.forward)<1.0f)
+        /*Debug.Log("Angle: " + (Vector3.Angle(player.transform.position - transform.position, transform.forward)<2.5f));
+        Debug.Log("distance: "+ (distance < maxEngagementDistance));
+        Debug.Log("Can see: " + isVisible());*/
+        if (isVisible() &&distance<maxEngagementDistance&& Vector3.Angle(new Vector3(player.transform.position.x - transform.position.x,0, player.transform.position.z - transform.position.z), new Vector3(transform.forward.x, 0, transform.forward.z)) <2.5f)
             return true;
         else
             return false;
     }
 
-    void OnDrawGizmosSelected()
+    /*void OnDrawGizmosSelected()
     {
         // Draw a yellow sphere at the transform's position
         Gizmos.color = Color.yellow;
         Gizmos.DrawSphere(transform.position, pursueRadius);
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(transform.position, minAttentionDistance);
-    }
+    }*/
 
 }

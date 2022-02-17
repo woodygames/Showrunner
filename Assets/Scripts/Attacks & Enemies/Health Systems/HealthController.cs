@@ -26,7 +26,7 @@ public class HealthController : MonoBehaviour
     }
 
     //Changes health based on value (-> damage is negative!)
-    private void ChangeHealth(int value)
+    public void ChangeHealth(int value)
     {
         health += value;
     }
