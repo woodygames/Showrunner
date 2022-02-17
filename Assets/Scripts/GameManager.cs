@@ -5,6 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+
+    /// <summary>
+    /// The GameManager Singleton.
+    /// </summary>
+    public static GameManager singleton;
+
     /// <summary>
     /// The name of the gameScene
     /// </summary>
@@ -25,6 +31,12 @@ public class GameManager : MonoBehaviour
 
     public void Awake()
     {
+        if (GameManager.singleton != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        GameManager.singleton = this;
         GameObject.DontDestroyOnLoad(this);
     }
 
@@ -33,6 +45,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void StartGame()
     {
+        Menu.singleton.gameObject.SetActive(false);
         SceneManager.LoadScene(gameScene, LoadSceneMode.Single);
     }
 
@@ -43,6 +56,7 @@ public class GameManager : MonoBehaviour
     {
         settingsMenu.Close();
         SceneManager.LoadScene(mainMenuScene, LoadSceneMode.Single);
+        Menu.singleton.gameObject.SetActive(true);
     }
 
 }

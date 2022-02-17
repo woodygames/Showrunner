@@ -11,6 +11,11 @@ public class SettingsMenu : MonoBehaviour
 {
 
     /// <summary>
+    /// The SettingsMenu Singleton.
+    /// </summary>
+    public static SettingsMenu singleton;
+
+    /// <summary>
     /// The AudioMixer to adjust the volume.
     /// </summary>
     [SerializeField]
@@ -47,8 +52,15 @@ public class SettingsMenu : MonoBehaviour
     }
 
     #region Standard Methods
-    private void Awake()
+    private void Start()
     {
+        if (SettingsMenu.singleton != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
+        SettingsMenu.singleton = this;
         GameObject.DontDestroyOnLoad(this);
     }
 
