@@ -24,6 +24,10 @@ public class DoorAudioController : MonoBehaviour
         audioSource = gameObject.GetComponent<AudioSource>();
     }
    
+    /// <summary>
+    /// Plays a certain door sound.
+    /// </summary>
+    /// <param name="doorSound">Enum describing the sound that shall play</param>
     public void PlaySound(DoorSound doorSound)
     {
         switch (doorSound)

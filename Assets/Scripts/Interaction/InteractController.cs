@@ -15,8 +15,9 @@ public class InteractController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            //if an gameObject with an interactable is returned the trigger method of the interactable is called
             RaycastHit hit = Camera.main.GetComponent<CameraController>().GetCursorHit();
-            Interactable interactable = hit.collider.gameObject.GetComponent<Interactable>();
+            Interactable interactable = hit.collider?.gameObject.GetComponent<Interactable>();
 
             interactable?.Trigger();
         }

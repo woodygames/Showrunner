@@ -1,10 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
+public class StateEvent : UnityEvent<MovementState, MovementState> { }
 
 public class PlayerStateController : MonoBehaviour
 {
     #region Variables
+    // the event that is triggered when the type of movement has changed
+    private StateEvent onStateChanged;
+    
+
     [Header("Climbing Related")]
 
     [Tooltip("The layer used for detecting ladders.")]
@@ -57,6 +64,7 @@ public class PlayerStateController : MonoBehaviour
     }
     #endregion
 
+    #region Helper Methods
     /// <summary>
     /// Checks for each movement state if a certain condition is met that would change the type of movement
     /// </summary>
@@ -224,9 +232,19 @@ public class PlayerStateController : MonoBehaviour
 
         if(newState != state)
         {
-            // Event invokement
+            onStateChanged.Invoke(state, newState);
         }
         
         return newState;
     }
+
+    /// <summary>
+    /// adds a listener to the event system that sends messages when the type of movement has changed
+    /// </summary>
+    public void AddListener(UnityAction<MovementState, MovementState> action)
+    {
+        if(onStateChanged == null) onStateChanged = new StateEvent();
+        onStateChanged.AddListener(action);
+    }
+    #endregion
 }
