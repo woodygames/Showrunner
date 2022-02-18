@@ -6,9 +6,9 @@ public class CombatController : MonoBehaviour
 {
     //Slots for the weapons - scriptable objects store the data for different items
     [SerializeField]
-    private WeaponTemplate rangedWeapon;
+    public WeaponTemplate rangedWeapon;
     [SerializeField]
-    private WeaponTemplate meleeWeapon;
+    public WeaponTemplate meleeWeapon;
 
     //Positions for the different weapon archetypes
     [SerializeField]
@@ -26,11 +26,52 @@ public class CombatController : MonoBehaviour
     [SerializeField]
     private float maxPickupDistance = 3.0f;
 
+    private WeaponTemplate currentWeapon;
+
+    private float timer;
+    private Animation anim; //change when using Animator
+    private int currentMagSize;
+
+
+    [SerializeField]
+    private Transform firePoint;
+
+    private void Start()
+    {
+        if (rangedWeapon)
+        {
+            currentMagSize = rangedWeapon.magSize;
+        }
+    }
     //Update once per frame
     private void Update()
     {
+        if (currentWeaponIndex == 1)
+        {
+            currentWeapon = rangedWeapon;
+        }
+        else if (currentWeaponIndex == 2)
+        {
+            currentWeapon = meleeWeapon;
+        }
+        else
+        {
+            currentWeapon = null;
+        }
         CombatInput();
         switchWeapons();
+
+        if(rangedWeapon)
+        if (timer >= rangedWeapon.magReload && rangedWeapon.magSize == 0)
+        {
+            currentMagSize = rangedWeapon.magSize;
+            timer = 0.0f;
+        }
+        if (rangedWeapon)
+            if (timer < rangedWeapon.magReload * 1.5f)
+        {
+            timer += Time.deltaTime;
+        }
     }
 
     //CALL IN UPDATE
@@ -56,9 +97,19 @@ public class CombatController : MonoBehaviour
             //fire the weapon in any other case
             else
             {
+
                 //TODO
                 //if ranged: get ammo and fire point from the weapon model or the predefined on the character, whatever it will be
                 //if melee: do da swing
+
+                if (currentWeapon == rangedWeapon&&rangedWeapon)
+                {
+                    shoot();
+                }
+                else if (currentWeapon == meleeWeapon&&meleeWeapon)
+                {
+                    slash();
+                }
 
             }
         }
@@ -147,6 +198,7 @@ public class CombatController : MonoBehaviour
 
             //add the weapon to the inventory and update the displayed weapon model
             rangedWeapon = weapon;
+            currentMagSize = weapon.magSize;
             UpdateWeaponModel();
         }
         //same as above, just for the melee weapon
@@ -167,6 +219,31 @@ public class CombatController : MonoBehaviour
             meleeWeapon = weapon;
             UpdateWeaponModel();
         }
+    }
+
+    private void slash()
+    {
+        if (timer >= 1 / meleeWeapon.attackRate)
+        {
+            GetComponentInChildren<meleeDanage>().canDamage = true;
+            timer = .0f;
+            anim.Play("MeleeAnim");
+            Debug.Log("play");
+        }
+    }
+
+
+    private void shoot()
+    {
+        if (timer >= 1 / rangedWeapon.attackRate && rangedWeapon.magSize > 0)
+        {
+            currentMagSize--;
+            timer = .0f;
+            var bullet = Instantiate(rangedWeapon.projectile, firePoint.position, firePoint.rotation);
+            bullet.GetComponent<projectileController>().damage = rangedWeapon.damage;
+            bullet.GetComponent<projectileController>().range = rangedWeapon.maxRange;
+        }
+        
     }
 }
 

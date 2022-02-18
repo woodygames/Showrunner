@@ -12,8 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70056f51e3c22e3408b7df17fee41d63, type: 3}
   m_Name: assaultRifle
   m_EditorClassIdentifier: 
-  damage: 10
-  attackRate: 5
+  damage: 5
+  attackRate: 10
+  magSize: 30
+  magReload: 0
+  projectile: {fileID: 2609755650496969728, guid: 5c5830441efa97446a46db2e3ba3e479, type: 3}
+  maxRange: 20
   isRanged: 1
   weaponModel: {fileID: 4460203557497132785, guid: 549bde4b26ae59d4dab800c2e2658531, type: 3}
   weaponPhysicalItem: {fileID: 4460203557497132785, guid: a70254c197256b04797ceca1faf055b4, type: 3}

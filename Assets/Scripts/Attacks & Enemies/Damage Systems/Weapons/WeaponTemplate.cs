@@ -7,6 +7,12 @@ public class WeaponTemplate:ScriptableObject
 {
     public int damage;
     public int attackRate;
+    public int magSize;
+    public float magReload;
+    public GameObject projectile;
+
+    public float maxRange;
+
     [SerializeField]
     private bool isRanged;
     public GameObject weaponModel;
