@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyCombat : MonoBehaviour
 {
     [SerializeField]
-    private int damage;
+    public int damage;
     [SerializeField]
     private float magSize;
 
@@ -28,11 +28,17 @@ public class EnemyCombat : MonoBehaviour
     [SerializeField]
     private Transform firePoint;
 
+    private bool isRanged;
 
+    [SerializeField]
+    private GameObject blade;
+    [SerializeField]
+    private Animation anim;
 
     private void Start()
     {
         currentMagSize = magSize;
+        isRanged = GetComponent<EnemyController>().isRangedWeapon;
     }
 
 
@@ -40,9 +46,32 @@ public class EnemyCombat : MonoBehaviour
     {
         isReady = GetComponent<EnemyController>().readyToFire();
         //Debug.Log(isReady);
-        if (isReady)
-            shoot();
+        if (isReady|| GetComponent<EnemyController>().readyToSlash())
+        {
+            if (isRanged&&isReady)
+                shoot();
+            else
+            {
+                if (GetComponent<EnemyController>().readyToSlash()) ;
+                    slash();
+            }
+        }
     }
+    private void slash()
+    {
+        if (timer >= 1/fireRate)
+        {
+            GetComponentInChildren<meleeDanage>().canDamage = true;
+            timer = .0f;
+            anim.Play("MeleeAnim");
+            Debug.Log("play");
+        }
+        else
+        {
+            timer += Time.deltaTime;
+        }
+    }
+
 
     private void shoot()
     {

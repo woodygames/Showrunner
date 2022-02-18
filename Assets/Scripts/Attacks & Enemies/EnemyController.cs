@@ -39,7 +39,7 @@ public class EnemyController : MonoBehaviour
     private bool inCombat=false;
 
     [SerializeField]
-    private bool isRangedWeapon;
+    public bool isRangedWeapon;
 
     private bool isRunning=false;
 
@@ -62,7 +62,12 @@ public class EnemyController : MonoBehaviour
     //Update once per frame
     private void Update()
     {
-        Debug.Log(agent.isStopped);
+        if (player == null)
+        {
+            return;
+        }
+
+        //Debug.Log(agent.isStopped);
         agent.isStopped = false;
         isInRange();
         //Check if the player is detected and set status accordingly
@@ -80,7 +85,7 @@ public class EnemyController : MonoBehaviour
             }
             else
             {
-                if (!isVisible())
+                if (!isVisible()&&distance>=maxEngagementDistance)
                 {
                     point = player.transform.position;
                     agent.SetDestination(point);
@@ -157,7 +162,7 @@ public class EnemyController : MonoBehaviour
             isRunning = false;
         }
 
-        if (!isRangedWeapon&& inCombat)
+        if (!isRangedWeapon&& inCombat&&distance>maxEngagementDistance)
         {
             Vector3 playerVector = player.transform.position - transform.position;
             playerVector -= playerVector.normalized * maxEngagementDistance * 0.5f;
@@ -185,7 +190,7 @@ public class EnemyController : MonoBehaviour
             playerVector = transform.position;
             
         }
-        else if(!isRangedWeapon)
+        else if(!isRangedWeapon && distance > maxEngagementDistance)
         {
             playerVector -= playerVector.normalized*maxEngagementDistance*0.5f;
         }
@@ -248,15 +253,37 @@ public class EnemyController : MonoBehaviour
     //method for checking if the enemy is ready to fire, called by enemy Combat script
     public bool readyToFire()
     {
-        //Debug.ClearDeveloperConsole();
-        float distance = Vector3.Distance(player.transform.position, gameObject.transform.position);
-        /*Debug.Log("Angle: " + (Vector3.Angle(player.transform.position - transform.position, transform.forward)<2.5f));
-        Debug.Log("distance: "+ (distance < maxEngagementDistance));
-        Debug.Log("Can see: " + isVisible());*/
-        if (isVisible() &&distance<maxEngagementDistance&& Vector3.Angle(new Vector3(player.transform.position.x - transform.position.x,0, player.transform.position.z - transform.position.z), new Vector3(transform.forward.x, 0, transform.forward.z)) <2.5f)
-            return true;
-        else
-            return false;
+        if (player)
+        {
+            //Debug.ClearDeveloperConsole();
+            float distance = Vector3.Distance(player.transform.position, gameObject.transform.position);
+            /*Debug.Log("Angle: " + (Vector3.Angle(player.transform.position - transform.position, transform.forward)<2.5f));
+            Debug.Log("distance: "+ (distance < maxEngagementDistance));
+            Debug.Log("Can see: " + isVisible());*/
+            if (isVisible() && distance < maxEngagementDistance && Vector3.Angle(new Vector3(player.transform.position.x - transform.position.x, 0, player.transform.position.z - transform.position.z), new Vector3(transform.forward.x, 0, transform.forward.z)) < 2.5f)
+                return true;
+            else
+                return false;
+        }
+        else return false;
+    }
+
+    public bool readyToSlash()
+    {
+        if (player)
+        {
+            //Debug.ClearDeveloperConsole();
+            float distance = Vector3.Distance(player.transform.position, gameObject.transform.position);
+            /*Debug.Log("Angle: " + (Vector3.Angle(player.transform.position - transform.position, transform.forward)<2.5f));
+            Debug.Log("distance: "+ (distance < maxEngagementDistance));
+            Debug.Log("Can see: " + isVisible());*/
+            if (distance < maxEngagementDistance)
+                return true;
+            else
+                return false;
+        }
+        else return false;
+       
     }
 
     /*void OnDrawGizmosSelected()
