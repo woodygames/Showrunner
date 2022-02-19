@@ -21,6 +21,18 @@ public class PlayerStateController : MonoBehaviour
     [SerializeField]
     private float ladderDistance = 3.2f;
 
+    private Transform ladder;
+    /// <summary>
+    /// if the player is climbing the ladder, its gameObject is stored here
+    /// </summary>
+    public Transform Ladder
+    {
+        get
+        {
+            return ladder;
+        }
+    }
+
     [Header("Dash Related")]
 
     [Tooltip("The maximum number of available dashes.")]
@@ -132,7 +144,7 @@ public class PlayerStateController : MonoBehaviour
             // leaving the ladder
             if(!Physics.CheckSphere(transform.position, 1f, ladderLayer))
             {
-                newState = MovementState.walking;
+                newState = MovementState.midAir;
             }
             // jumping off the ladder
             if(input.jumping)
@@ -213,8 +225,9 @@ public class PlayerStateController : MonoBehaviour
                 Vector3.Distance(transform.position, hit.point) <= ladderDistance &&            // Is the player near enough to climb onto the ladder?
                 Vector3.Angle(hit.transform.forward, transform.position - hit.point) > 90f)     // Is the player facing the back side of the ladder?
             {
-                newState = MovementState.climbing; 
-                GetComponent<ClimbingMovement>()?.Prepare(hit.transform.gameObject);
+                newState = MovementState.climbing;
+                ladder = hit.transform;
+                GetComponent<ClimbingMovement>()?.Prepare(Ladder);
             }
             // perform an attack
             else
@@ -247,4 +260,10 @@ public class PlayerStateController : MonoBehaviour
         onStateChanged.AddListener(action);
     }
     #endregion
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = new Color(1f, 1f, 0f, 0.5f);
+        Gizmos.DrawSphere(transform.position, 1f);
+    }
 }

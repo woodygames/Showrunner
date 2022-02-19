@@ -37,9 +37,9 @@ public class ClimbingMovement : MovementType
     /// Teleports the player to a position in front of the ladder
     /// </summary>
     /// <param name="ladder"></param>
-    public void Prepare(GameObject ladder)
+    public void Prepare(Transform ladder)
     { 
-        Vector3 climbingPosition = ladder.transform.position - ladder.transform.forward * climbingOffset;
+        Vector3 climbingPosition = ladder.position - ladder.forward * climbingOffset;
 
         playerMovement.MoveInstantaniously(climbingPosition);
     }

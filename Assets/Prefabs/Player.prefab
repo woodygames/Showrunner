@@ -199,7 +199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   changeTo: 3
-  climbingOffset: 0.8
+  climbingOffset: 0
   speedFraction: 0.5
 --- !u!114 &681305977983847191
 MonoBehaviour:
