@@ -46,6 +46,10 @@ public class CombatController : MonoBehaviour
     //Update once per frame
     private void Update()
     {
+
+
+        timer += Time.deltaTime;
+
         if (currentWeaponIndex == 1)
         {
             currentWeapon = rangedWeapon;
@@ -61,16 +65,12 @@ public class CombatController : MonoBehaviour
         CombatInput();
         switchWeapons();
 
-        if(rangedWeapon)
-        if (timer >= rangedWeapon.magReload && rangedWeapon.magSize == 0)
-        {
-            currentMagSize = rangedWeapon.magSize;
-            timer = 0.0f;
-        }
-        if (rangedWeapon)
-            if (timer < rangedWeapon.magReload * 1.5f)
-        {
-            timer += Time.deltaTime;
+        if (rangedWeapon){
+            if (currentWeapon == rangedWeapon && timer >= rangedWeapon.magReload && currentMagSize == 0)
+            {
+                currentMagSize = rangedWeapon.magSize;
+                timer = 0.0f;
+            }
         }
     }
 
@@ -78,6 +78,17 @@ public class CombatController : MonoBehaviour
     //Method to check the overall Inputs concerning combat
     public void CombatInput()
     {
+        if (Input.GetMouseButton(1))
+        {
+            if (currentWeapon == rangedWeapon && rangedWeapon)
+            {
+                shoot();
+            }
+            else if (currentWeapon == meleeWeapon && meleeWeapon)
+            {
+                slash();
+            }
+        }
         //what was clicked on?
         if (Input.GetMouseButtonDown(0))
         {
@@ -92,25 +103,7 @@ public class CombatController : MonoBehaviour
                     OnWeaponChange(hitObject.weapon);
                     Destroy(hitObject.gameObject);
                 }
-            }
-
-            //fire the weapon in any other case
-            else
-            {
-
-                //TODO
-                //if ranged: get ammo and fire point from the weapon model or the predefined on the character, whatever it will be
-                //if melee: do da swing
-
-                if (currentWeapon == rangedWeapon&&rangedWeapon)
-                {
-                    shoot();
-                }
-                else if (currentWeapon == meleeWeapon&&meleeWeapon)
-                {
-                    slash();
-                }
-
+                return;
             }
         }
     }
@@ -226,7 +219,7 @@ public class CombatController : MonoBehaviour
         if (timer >= 1 / meleeWeapon.attackRate)
         {
             GetComponentInChildren<meleeDanage>().canDamage = true;
-            timer = .0f;
+            timer = 0.0f;
             anim.Play("MeleeAnim");
             Debug.Log("play");
         }
@@ -235,10 +228,10 @@ public class CombatController : MonoBehaviour
 
     private void shoot()
     {
-        if (timer >= 1 / rangedWeapon.attackRate && rangedWeapon.magSize > 0)
+        if (timer >= (1 / rangedWeapon.attackRate) && currentMagSize > 0)
         {
             currentMagSize--;
-            timer = .0f;
+            timer = 0.0f;
             var bullet = Instantiate(rangedWeapon.projectile, firePoint.position, firePoint.rotation);
             bullet.GetComponent<projectileController>().damage = rangedWeapon.damage;
             bullet.GetComponent<projectileController>().range = rangedWeapon.maxRange;

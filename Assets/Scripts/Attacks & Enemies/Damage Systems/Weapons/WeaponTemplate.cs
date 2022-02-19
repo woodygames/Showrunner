@@ -6,7 +6,7 @@ using UnityEngine;
 public class WeaponTemplate:ScriptableObject
 {
     public int damage;
-    public int attackRate;
+    public float attackRate;
     public int magSize;
     public float magReload;
     public GameObject projectile;

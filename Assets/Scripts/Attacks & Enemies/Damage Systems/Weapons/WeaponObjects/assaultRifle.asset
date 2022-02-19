@@ -15,7 +15,7 @@ MonoBehaviour:
   damage: 5
   attackRate: 10
   magSize: 30
-  magReload: 0
+  magReload: 3
   projectile: {fileID: 2609755650496969728, guid: 5c5830441efa97446a46db2e3ba3e479, type: 3}
   maxRange: 20
   isRanged: 1
