@@ -113,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
 		
 		controller.Move(velocity * Time.deltaTime);
 		
-		if(input.horizontal != 0 && input.vertical != 0 && OnSlope())
+		if((input.horizontal != 0 || input.vertical != 0) && OnSlope())
 			controller.Move(Vector3.down * controller.height/2 * slopeForce * Time.deltaTime);
 	}
 	
@@ -127,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
 		
 		controller.Move(move.normalized * speed/2f * Time.deltaTime);
 
-		if (input.horizontal != 0 && input.vertical != 0 && OnSlope())
+		if ((input.horizontal != 0 || input.vertical != 0) && OnSlope())
 			controller.Move(Vector3.down * controller.height / 2 * slopeForce * Time.deltaTime);
 	}
 	
@@ -136,6 +136,7 @@ public class PlayerMovement : MonoBehaviour
 	/// </summary>
 	public void Move(Vector3 direction, float appliedGravity)
 	{
+		velocity = Vector3.zero;
 		if(appliedGravity > 0) direction.y += gravity * Time.deltaTime * appliedGravity;
 		controller.Move(direction * runSpeed * Time.deltaTime);
 	}
