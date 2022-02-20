@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 6204114616637903277}
   - component: {fileID: 3432937419827733604}
   - component: {fileID: 681305977983847191}
-  - component: {fileID: 8019369724516505231}
+  - component: {fileID: 2188172703788279352}
   - component: {fileID: 967751338813494937}
   - component: {fileID: 4885639651816845770}
   m_Layer: 0
@@ -216,7 +216,7 @@ MonoBehaviour:
   changeTo: 4
   dashForce: 5
   dashDuration: 0.3
---- !u!114 &8019369724516505231
+--- !u!114 &2188172703788279352
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -229,6 +229,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   changeTo: 5
+  dashForce: 5
+  dashDuration: 0.3
 --- !u!114 &967751338813494937
 MonoBehaviour:
   m_ObjectHideFlags: 0

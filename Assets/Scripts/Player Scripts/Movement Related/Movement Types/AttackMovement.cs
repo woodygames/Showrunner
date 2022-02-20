@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DashMovement : MovementType
+public class AttackMovement : MovementType
 {
     [Tooltip("The force that pushes the player forward during the dash.")]
     [SerializeField]
@@ -10,6 +10,8 @@ public class DashMovement : MovementType
     [Tooltip("Determines how long the player dashes.")]
     [SerializeField]
     private float dashDuration = 0.3f;
+
+    private Vector3 cursorPosition;
 
     private void Start()
     {
@@ -21,8 +23,12 @@ public class DashMovement : MovementType
     /// </summary>
     public override void Move(bool isGrounded)
     {
-        Vector3 direction = Vector3.right * input.horizontal + Vector3.forward * input.vertical;
-        print(direction.magnitude);
+        Vector3 direction = (cursorPosition - transform.position).normalized;
         playerMovement.AddForce(direction * dashForce, dashDuration);
+    }
+
+    public void Prepare(Vector3 cursor)
+    {
+        cursorPosition = cursor;
     }
 }

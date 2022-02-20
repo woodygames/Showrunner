@@ -68,7 +68,6 @@ public class PlayerStateController : MonoBehaviour
             {
                 dashTimer = 0f;
                 dashStock++;
-                print(dashStock);
             }
 
         }
@@ -161,26 +160,29 @@ public class PlayerStateController : MonoBehaviour
         {
             // after performing the dash
             newState = MovementState.walking;
+            idle = false;
         }
         #endregion
 
         #region case attacking
         if (newState == MovementState.attacking)
         {
+            //idle = false;
+            //pauseTimer += Time.deltaTime;
+            //// attack has ended
+            //if(pauseTimer >= attackPause)
+            //{
+            //    pauseTimer = 0f;
+            //    idle = true;
+            //    // player wants to walk
+            //    if (input.horizontal != 0f || input.vertical != 0f)
+            //    {
+            //        newState = MovementState.walking;
+            //        idle = false;
+            //    }
+            //}
+            newState = MovementState.walking;
             idle = false;
-            pauseTimer += Time.deltaTime;
-            // attack has ended
-            if(pauseTimer >= attackPause)
-            {
-                pauseTimer = 0f;
-                idle = true;
-                // player wants to walk
-                if (input.horizontal != 0f || input.vertical != 0f)
-                {
-                    newState = MovementState.walking;
-                    idle = false;
-                }
-            }
         }
         #endregion
 
@@ -229,11 +231,17 @@ public class PlayerStateController : MonoBehaviour
                 ladder = hit.transform;
                 GetComponent<ClimbingMovement>()?.Prepare(Ladder);
             }
+
+            idle = false;
+        }
+
+        if(input.use)
+        {
+            RaycastHit hit = Camera.main.GetComponent<CameraController>().GetCursorHit();
+
+            GetComponent<AttackMovement>()?.Prepare(hit.point);
             // perform an attack
-            else
-            {
-                newState = MovementState.attacking;
-            }
+            newState = MovementState.attacking;
 
             idle = false;
         }

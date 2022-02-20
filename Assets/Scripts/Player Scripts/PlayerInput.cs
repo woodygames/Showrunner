@@ -187,7 +187,7 @@ public class PlayerInput : MonoBehaviour
     ///</summary>
     public bool use
     {
-        get { return Input.GetKey(keyCodes[(int)Action.Use]); }
+        get { return Input.GetKeyDown(keyCodes[(int)Action.Use]); }
     }
 
     ///<summary>
