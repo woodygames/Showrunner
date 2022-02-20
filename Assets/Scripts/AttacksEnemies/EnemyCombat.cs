@@ -37,7 +37,7 @@ public class EnemyCombat : MonoBehaviour
 
     private void Start()
     {
-        currentMagSize = magSize;
+        currentMagSize = 0;
         isRanged = GetComponent<EnemyController>().isRangedWeapon;
     }
 
@@ -48,12 +48,13 @@ public class EnemyCombat : MonoBehaviour
         //Debug.Log(isReady);
         if (isReady|| GetComponent<EnemyController>().readyToSlash())
         {
-            if (isRanged&&isReady)
-                shoot();
-            else
+            if (isRanged && isReady)
             {
-                if (GetComponent<EnemyController>().readyToSlash()) ;
-                    slash();
+                shoot();
+            }
+            else if(!isRanged&& GetComponent<EnemyController>().readyToSlash())
+            {
+                slash();
             }
         }
     }
