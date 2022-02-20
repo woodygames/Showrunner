@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8639025806955338149}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: BridgeParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2373705399149305106, guid: a34c64c52b1368a45a86e61071425f41, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3151051717039671208, guid: a34c64c52b1368a45a86e61071425f41, type: 3}
       propertyPath: m_RootOrder
