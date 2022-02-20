@@ -118,6 +118,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 3
+  offset: {x: 0, y: 0, z: 0}
+  height: 2
 --- !u!114 &4575407869571434237
 MonoBehaviour:
   m_ObjectHideFlags: 0

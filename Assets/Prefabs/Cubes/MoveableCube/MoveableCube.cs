@@ -7,36 +7,64 @@ public class MoveableCube : Interactable
     bool isAttached = false;
 
     [SerializeField]
-    private float offset = 2f;
-    
+    private Vector3 offset;
+
+    [SerializeField]
+    private float height;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
 
     }
 
+   /* private void OnDrawGizmos()
+    {
+        Vector3 curserPoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Mathf.Abs(Camera.main.transform.position.z)));
+        Gizmos.color = Color.red;
+        direction = curserPoint - Camera.main.transform.position;
+        print(Vector3.Distance(curserPoint, Camera.main.transform.position));
+        Gizmos.DrawRay(Camera.main.transform.position,   Camera.main.transform.position- curserPoint);
+    }*/
+
     // Update is called once per frame
     void Update()
     {
-  
+       
+
+        
         if (isAttached)
         {
+            Vector3 curserPoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Mathf.Abs(Camera.main.transform.position.z)));
+            Debug.DrawRay(Camera.main.transform.position, curserPoint - Camera.main.transform.position, Color.green);
+
+            Vector3 aufpunkt = Camera.main.transform.position;
+            Vector3 direction = curserPoint - aufpunkt;
+
+            float alpha = (-aufpunkt.y + height) / direction.y;
+            Vector3 endpoint = aufpunkt + alpha * direction;
+
             float distance = Vector3.Distance(GameObject.FindGameObjectWithTag("Player").transform.position, gameObject.transform.position);
             if (Input.GetMouseButton(0) && distance < range )
             {
-                print("flying");
+              
+
                 Rigidbody rigidbody = GetComponent<Rigidbody>();
-                rigidbody.position = new Vector3(
-                    Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z)).x,
+                rigidbody.position = endpoint + offset;
+
+
+                   /* new Vector3(
+                    Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Mathf.Abs(Camera.main.transform.position.z))).x,
                      GameObject.FindGameObjectWithTag("Player").transform.position.y + offset,
-                    Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z)).z
-                    );
+                     GameObject.FindGameObjectWithTag("Player").transform.position.z
+                    );*/
             }
             else
             {
-                print("stopped flying");
                 isAttached = false;
-                gameObject.transform.position = new Vector3(gameObject.transform.position.x, GameObject.FindGameObjectWithTag("Player").transform.position.y + offset, gameObject.transform.position.z);
+               // gameObject.transform.position = new Vector3(gameObject.transform.position.x, GameObject.FindGameObjectWithTag("Player").transform.position.y + offset, gameObject.transform.position.z);
             }
         }
     }
