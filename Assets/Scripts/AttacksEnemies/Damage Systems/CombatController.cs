@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class CombatController : MonoBehaviour
 {
@@ -32,6 +33,9 @@ public class CombatController : MonoBehaviour
     private Animation anim; //change when using Animator
     private int currentMagSize;
 
+    private Animator animator;
+
+    private AnimatorStateInfo stateInfo;
 
     [SerializeField]
     private Transform firePoint;
@@ -42,6 +46,7 @@ public class CombatController : MonoBehaviour
         {
             currentMagSize = rangedWeapon.magSize;
         }
+        animator = GetComponentInChildren<Animator>();
     }
     //Update once per frame
     private void Update()
@@ -78,9 +83,10 @@ public class CombatController : MonoBehaviour
     //Method to check the overall Inputs concerning combat
     public void CombatInput()
     {
+        stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         if (Input.GetMouseButton(1))
         {
-            if (currentWeapon == rangedWeapon && rangedWeapon)
+            if (currentWeapon == rangedWeapon && rangedWeapon&&(stateInfo.IsName("Walking")|| stateInfo.IsName("Idle")))
             {
                 shoot();
             }
@@ -115,17 +121,17 @@ public class CombatController : MonoBehaviour
     //X to switch to bare hands (currentWeaponIndex==3) , INPUT CHANGES IN THE FUTURE! <------------------
     public void switchWeapons()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1)&&!(Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.Space)))
         {
             currentWeaponIndex = 1;
             UpdateWeaponModel();
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        else if (Input.GetKeyDown(KeyCode.Alpha2) && !(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.Space)))
         {
             currentWeaponIndex = 2;
             UpdateWeaponModel();
         }
-        else if (Input.GetKeyDown(KeyCode.X))
+        else if (Input.GetKeyDown(KeyCode.X) && !(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.Space)))
         {
             currentWeaponIndex = 3;
             UpdateWeaponModel();
@@ -144,6 +150,7 @@ public class CombatController : MonoBehaviour
         {
             if (rangedWeapon)
             {
+                animator.runtimeAnimatorController = Resources.Load("CharacterAttacksFinished") as RuntimeAnimatorController;
                 //same as below, optional implementation of object pooling in the future
                 Destroy(currentWeaponModel);
                 currentWeaponModel = Instantiate(rangedWeapon.weaponModel, rangedPosition, false);
@@ -155,6 +162,7 @@ public class CombatController : MonoBehaviour
         {
             if (meleeWeapon)
             {
+                animator.runtimeAnimatorController = Resources.Load("path_to_your_controller") as RuntimeAnimatorController;
                 Destroy(currentWeaponModel);
                 currentWeaponModel = Instantiate(meleeWeapon.weaponModel, meleePosition, false);
                 currentWeaponModel.transform.localPosition = new Vector3(0, 0, 0);
@@ -163,6 +171,7 @@ public class CombatController : MonoBehaviour
         }
         else
         {
+            animator.runtimeAnimatorController = Resources.Load("CharacterWeaponlessFinished") as RuntimeAnimatorController;
             Destroy(currentWeaponModel);
         }
     }
@@ -238,5 +247,6 @@ public class CombatController : MonoBehaviour
         }
         
     }
+
 }
 
