@@ -30,6 +30,7 @@ public class BridgeAudioController : MonoBehaviour
     /// <param name="bridgeSound">Enum describing the sound that shall play</param>
     public void PlaySound(BridgeSound bridgeSound)
     {
+        audioSource = gameObject.GetComponent<AudioSource>();
         switch (bridgeSound)
         {
             case BridgeSound.deny:

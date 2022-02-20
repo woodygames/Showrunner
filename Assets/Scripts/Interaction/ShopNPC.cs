@@ -13,4 +13,10 @@ public class ShopNPC : Interactable
     {
         return true;
     }
+
+    public override bool OutlineIsRed()
+    {
+        float distance = Vector3.Distance(GameObject.FindGameObjectWithTag("Player").transform.position, gameObject.transform.position);
+        return (distance > range);
+    }
 }

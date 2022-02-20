@@ -308,6 +308,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7190501988136300736, guid: 1f1f06a8a91ed924fa2a6ce1c935d232, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2be2269311dcdad40964d759a0b8c67e, type: 2}
+    - target: {fileID: -7190501988136300736, guid: 1f1f06a8a91ed924fa2a6ce1c935d232, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9dba38ed1bfd5a343ab31e91a3f8131a, type: 2}
+    - target: {fileID: -7190501988136300736, guid: 1f1f06a8a91ed924fa2a6ce1c935d232, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2be2269311dcdad40964d759a0b8c67e, type: 2}
+    - target: {fileID: -7190501988136300736, guid: 1f1f06a8a91ed924fa2a6ce1c935d232, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9dba38ed1bfd5a343ab31e91a3f8131a, type: 2}
     - target: {fileID: 919132149155446097, guid: 1f1f06a8a91ed924fa2a6ce1c935d232, type: 3}
       propertyPath: m_Name
       value: TimeJamCharacter
