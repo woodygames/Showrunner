@@ -8,6 +8,14 @@ public class HighLightController : MonoBehaviour
     private Vector3 mousePosition;
     private GameObject lookAt;
 
+    [SerializeField]
+    private Material material;
+
+    [SerializeField]
+    private Color colorAccepted;
+    [SerializeField]
+    private Color colorDenied;
+
     void Start()
     {
         mousePosition = Input.mousePosition;
@@ -45,6 +53,18 @@ public class HighLightController : MonoBehaviour
             {
                 if (lookAt.GetComponent<Outline>() != null) lookAt.GetComponent<Outline>().SetOutline(true);
             }
+        }
+    }
+
+    public void SetOutlineRed(bool b)
+    {
+        if (b)
+        {
+            material.SetColor("_Color", colorDenied);
+        }
+        else
+        {
+            material.SetColor("_Color", colorAccepted);
         }
     }
 }

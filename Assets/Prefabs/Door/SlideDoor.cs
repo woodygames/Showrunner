@@ -10,6 +10,9 @@ public class SlideDoor : Interactable, Observer
     [SerializeField]
     private Interactable[] interactables;
 
+    [SerializeField]
+    private Collider collider;
+
     /// <summary>
     /// door is unlocked when all interactables return true for GetPass()
     /// </summary>
@@ -88,11 +91,20 @@ public class SlideDoor : Interactable, Observer
     {
         if (opened) return;
          opened = true;
+        NotifyAllObservers();
         Animator animator = GetComponent<Animator>();
         animator.SetBool("closed", false);
 
         
         Debug.Log("slide sounds");
+
+        collider.enabled = false;
         //Destroy(this.gameObject);
+    }
+
+    public override bool OutlineIsRed()
+    {
+        float distance = Vector3.Distance(GameObject.FindGameObjectWithTag("Player").transform.position, gameObject.transform.position);
+        return (distance > range)||(!unlocked);
     }
 }

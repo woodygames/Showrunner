@@ -85,20 +85,26 @@ public class Bridge : Interactable, Observer
     public void ExtendBegin(int len)
     {
         extended = true;
-       
+
         Animator animator = GetComponent<Animator>();
         animator.SetBool("extended", true);
         length = len;
+        ParticleSystem particleSystem = animator.gameObject.GetComponent<ParticleSystem>();
+        particleSystem.Play();
+        gameObject.GetComponent<BridgeAudioController>().PlaySound(BridgeSound.extended);
     }
 
     public void ExtendContinue()
     {
+        Destroy(GetComponent<Outline>());
+        gameObject.layer = 6;
+
         if (length == 0)
             return;
         extended = true;
        
         GameObject subBridge = Instantiate(bridgeCopy, gameObject.transform.position,
-          bridgeCopy.transform.rotation);
+          bridgeCopy.transform.rotation, this.gameObject.transform.parent.gameObject.transform);
         Bridge subBridgeScript = subBridge.GetComponentInChildren<Bridge>();
         subBridgeScript.SetBridgeCopy(subBridge);
         subBridgeScript.ExtendBegin(length - 1);
@@ -107,5 +113,11 @@ public class Bridge : Interactable, Observer
     public void SetBridgeCopy(GameObject copy)
     {
         bridgeCopy = copy;
+    }
+
+    public override bool OutlineIsRed()
+    {
+        float distance = Vector3.Distance(GameObject.FindGameObjectWithTag("Player").transform.position, gameObject.transform.position);
+        return ((distance > range) ||(!unlocked));
     }
 }
