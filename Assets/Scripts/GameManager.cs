@@ -26,6 +26,12 @@ public class GameManager : MonoBehaviour
     private string gameScene;
 
     /// <summary>
+    /// The name of the tutorialScene
+    /// </summary>
+    [SerializeField]
+    private string tutorialScene;
+
+    /// <summary>
     /// The name of the mainMenu scene
     /// </summary>
     [SerializeField]
@@ -80,6 +86,16 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Switches to the tutorialScene and starts the game.
+    /// </summary>
+    public void StartTutorial()
+    {
+        gameStartet = true;
+        Menu.singleton.gameObject.SetActive(false);
+        SceneManager.LoadScene(tutorialScene, LoadSceneMode.Single);
+    }
+
+    /// <summary>
     /// Finishes the game and switches back to the mainMenu
     /// </summary>
     public void FinishGame()
@@ -115,7 +131,7 @@ public class GameManager : MonoBehaviour
 
     public void SetStartPosition(Scene scene, LoadSceneMode loadSceneMode)
     {
-        if(gameScene.Equals(scene.name))
+        if(gameScene.Equals(scene.name) || tutorialScene.Equals(scene.name))
         {
             GameObject obj = GameObject.FindGameObjectWithTag("Start");
             start = obj.transform;

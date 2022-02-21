@@ -36,6 +36,9 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField]
     private string gameScene;
 
+    [SerializeField]
+    private string tutorialScene;
+
     /// <summary>
     /// Adjusts the master sound value according to the slider value.
     /// </summary>
@@ -70,7 +73,7 @@ public class SettingsMenu : MonoBehaviour
     private void Update()
     {
 
-        if(SceneManager.GetActiveScene().name.Equals(gameScene) && PlayerInput.singleton.escape && !canvas.activeSelf)
+        if((SceneManager.GetActiveScene().name.Equals(gameScene) || SceneManager.GetActiveScene().name.Equals(tutorialScene)) && PlayerInput.singleton.escape && !canvas.activeSelf)
         {
             canvas.SetActive(true);
             finishButton.SetActive(true);
