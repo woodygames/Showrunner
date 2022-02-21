@@ -55,18 +55,18 @@ public class EnemyController : MonoBehaviour
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        player = FindObjectOfType<CombatController>().gameObject;
         point = GetIdlePoint(0.0f);
     }
 
     //Update once per frame
     private void Update()
     {
+        if(FindObjectOfType<CombatController>())
+            player = FindObjectOfType<CombatController>().gameObject;
         if (player == null)
         {
             return;
         }
-
         //Debug.Log(agent.isStopped);
         agent.isStopped = false;
         isInRange();

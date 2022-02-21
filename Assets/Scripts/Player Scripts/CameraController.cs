@@ -91,4 +91,10 @@ public class CameraController : MonoBehaviour
     {
         target = GameManager.singleton.GetNextTarget();
     }
+
+    public IEnumerator changeCam()
+    {
+        yield return new WaitForSeconds(3);
+        Camera.main.GetComponent<CameraController>().SwitchTarget();
+    }
 }

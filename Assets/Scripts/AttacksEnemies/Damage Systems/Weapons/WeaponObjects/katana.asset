@@ -10,10 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 70056f51e3c22e3408b7df17fee41d63, type: 3}
-  m_Name: sword
+  m_Name: katana
   m_EditorClassIdentifier: 
   damage: 15
-  attackRate: 2
+  attackRate: 3
+  magSize: 0
+  magReload: 0
+  projectile: {fileID: 0}
+  muzzleFlash: {fileID: 0}
+  maxRange: 0
+  coneSize: 0
+  usePelletMode: 0
+  pelletCount: 0
   isRanged: 0
   weaponModel: {fileID: 4460203557497132785, guid: 02622b4fed444364f9f5ae3ddff91eb5, type: 3}
   weaponPhysicalItem: {fileID: 4460203557497132785, guid: afbcea2ac75f1c044ab67d2d3a27471c, type: 3}

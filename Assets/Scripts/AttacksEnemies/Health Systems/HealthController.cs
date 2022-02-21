@@ -8,6 +8,11 @@ public class HealthController : MonoBehaviour
     [SerializeField]
     private int maxHealth;
     private int health; //Current health
+    [SerializeField]
+    private Transform healthBar;
+
+    [SerializeField]
+    private GameObject deadBody;
 
     void Awake()
     {
@@ -17,7 +22,7 @@ public class HealthController : MonoBehaviour
     void Update()
     {
         //update the health bar/lives here
-
+        healthBar.localScale = new Vector3((((float)health) /maxHealth), healthBar.localScale.y, healthBar.localScale.z);
         //kill if no health left
         if (health <= 0)
         {
@@ -33,7 +38,10 @@ public class HealthController : MonoBehaviour
 
     private void Die()
     {
+        Camera.main.GetComponent<CameraController>().StartCoroutine("changeCam");
+        Instantiate(deadBody, transform.position, transform.rotation);
         Destroy(gameObject);
         //kill effect goes right here
     }
+
 }
