@@ -38,8 +38,10 @@ public class HealthController : MonoBehaviour
 
     private void Die()
     {
+        Camera.main.GetComponent<CameraController>().StartCoroutine("changeCam");
         Instantiate(deadBody, transform.position, transform.rotation);
         Destroy(gameObject);
         //kill effect goes right here
     }
+
 }

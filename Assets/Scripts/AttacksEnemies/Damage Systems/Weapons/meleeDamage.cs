@@ -13,6 +13,7 @@ public class meleeDamage : MonoBehaviour
     [SerializeField]
     private float damageTime;
 
+    [SerializeField]
     private int damage;
 
     private float timer;
