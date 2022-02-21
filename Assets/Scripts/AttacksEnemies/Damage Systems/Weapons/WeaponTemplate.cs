@@ -10,8 +10,13 @@ public class WeaponTemplate:ScriptableObject
     public int magSize;
     public float magReload;
     public GameObject projectile;
+    public GameObject muzzleFlash;
 
     public float maxRange;
+
+    public float coneSize;
+    public bool usePelletMode;
+    public int pelletCount;
 
     [SerializeField]
     private bool isRanged;

@@ -27,15 +27,20 @@ public class CombatController : MonoBehaviour
     [SerializeField]
     private float maxPickupDistance = 3.0f;
 
-    private WeaponTemplate currentWeapon;
+    public WeaponTemplate currentWeapon;
 
     private float timer;
     private Animation anim; //change when using Animator
     private int currentMagSize;
+    private float coneSize;
 
     private Animator animator;
 
     private AnimatorStateInfo stateInfo;
+
+    private bool pelletMode;
+    private int pelletCount;
+    private GameObject muzzleFlash;
 
     [SerializeField]
     private Transform firePoint;
@@ -51,8 +56,15 @@ public class CombatController : MonoBehaviour
     //Update once per frame
     private void Update()
     {
+        if (currentWeapon)
+        {
+            if(currentWeapon.muzzleFlash)
+                muzzleFlash = currentWeapon.muzzleFlash;
+            coneSize = currentWeapon.coneSize;
+            pelletMode = currentWeapon.usePelletMode;
+            pelletCount = currentWeapon.pelletCount;
 
-
+        }
         timer += Time.deltaTime;
 
         if (currentWeaponIndex == 1)
@@ -77,6 +89,25 @@ public class CombatController : MonoBehaviour
                 timer = 0.0f;
             }
         }
+        if (currentWeaponIndex == 1)
+        {
+            //disable attack movement
+            GetComponent<PlayerMovementController>().RemoveMovementType(GetComponent<AttackMovement>());
+            animator.runtimeAnimatorController = Resources.Load("CharacterAttacksFinished") as RuntimeAnimatorController;
+        }
+        else if (currentWeaponIndex == 2)
+        {
+            //enable attack movement
+            GetComponent<PlayerMovementController>().AddMovementType(GetComponent<AttackMovement>());
+            animator.runtimeAnimatorController = Resources.Load("CharacterMeleeFinished") as RuntimeAnimatorController;
+        }
+        else
+        {
+            //disable attack movement
+            GetComponent<PlayerMovementController>().RemoveMovementType(GetComponent<AttackMovement>());
+            //GetComponent<DashMovement>().enabled = true;
+            animator.runtimeAnimatorController = Resources.Load("CharacterWeaponlessFinished") as RuntimeAnimatorController;
+        }
     }
 
     //CALL IN UPDATE
@@ -86,12 +117,19 @@ public class CombatController : MonoBehaviour
         stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         if (Input.GetMouseButton(1))
         {
+            
             if (currentWeapon == rangedWeapon && rangedWeapon&&(stateInfo.IsName("Walking")|| stateInfo.IsName("Idle")))
             {
+                GetComponent<PlayerMovementController>().RemoveMovementType(GetComponent<AttackMovement>());
                 shoot();
             }
-            else if (currentWeapon == meleeWeapon && meleeWeapon)
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            
+            if (currentWeapon == meleeWeapon && meleeWeapon)
             {
+                GetComponent<PlayerMovementController>().AddMovementType(GetComponent<AttackMovement>());
                 slash();
             }
         }
@@ -150,7 +188,7 @@ public class CombatController : MonoBehaviour
         {
             if (rangedWeapon)
             {
-                animator.runtimeAnimatorController = Resources.Load("CharacterAttacksFinished") as RuntimeAnimatorController;
+                
                 //same as below, optional implementation of object pooling in the future
                 Destroy(currentWeaponModel);
                 currentWeaponModel = Instantiate(rangedWeapon.weaponModel, rangedPosition, false);
@@ -162,7 +200,7 @@ public class CombatController : MonoBehaviour
         {
             if (meleeWeapon)
             {
-                animator.runtimeAnimatorController = Resources.Load("path_to_your_controller") as RuntimeAnimatorController;
+               
                 Destroy(currentWeaponModel);
                 currentWeaponModel = Instantiate(meleeWeapon.weaponModel, meleePosition, false);
                 currentWeaponModel.transform.localPosition = new Vector3(0, 0, 0);
@@ -170,8 +208,7 @@ public class CombatController : MonoBehaviour
             }
         }
         else
-        {
-            animator.runtimeAnimatorController = Resources.Load("CharacterWeaponlessFinished") as RuntimeAnimatorController;
+        { 
             Destroy(currentWeaponModel);
         }
     }
@@ -227,10 +264,9 @@ public class CombatController : MonoBehaviour
     {
         if (timer >= 1 / meleeWeapon.attackRate)
         {
-            GetComponentInChildren<meleeDanage>().canDamage = true;
+            GetComponentInChildren<meleeDamage>().canDamage = true;
             timer = 0.0f;
-            anim.Play("MeleeAnim");
-            Debug.Log("play");
+            animator.SetTrigger("attack");
         }
     }
 
@@ -239,11 +275,37 @@ public class CombatController : MonoBehaviour
     {
         if (timer >= (1 / rangedWeapon.attackRate) && currentMagSize > 0)
         {
-            currentMagSize--;
-            timer = 0.0f;
-            var bullet = Instantiate(rangedWeapon.projectile, firePoint.position, firePoint.rotation);
-            bullet.GetComponent<projectileController>().damage = rangedWeapon.damage;
-            bullet.GetComponent<projectileController>().range = rangedWeapon.maxRange;
+            var muzzlePosition = GetComponentInChildren<muzzleFlashManager>().gameObject.transform;
+            if (!pelletMode)
+            {
+                Instantiate(muzzleFlash, muzzlePosition.position, muzzlePosition.rotation);
+                currentMagSize--;
+                timer = 0.0f;
+                float randx = Random.value;
+                float randy = Random.value;
+                Vector3 cone = new Vector3(randx*coneSize,0,randy*coneSize);
+                var bullet = Instantiate(rangedWeapon.projectile, firePoint.position,new Quaternion(firePoint.rotation.x+cone.x, firePoint.rotation.y, firePoint.rotation.z+cone.z, firePoint.rotation.w));
+                bullet.GetComponent<projectileController>().damage = rangedWeapon.damage;
+                bullet.GetComponent<projectileController>().range = rangedWeapon.maxRange;
+            }
+            else
+            {
+                currentMagSize--;
+                timer = 0.0f;
+
+                Instantiate(muzzleFlash,muzzlePosition.position,muzzlePosition.rotation);
+
+                for(int i=0; i < pelletCount; i++)
+                {
+                    float randx = (Random.value-Random.value);
+                    float randy = (Random.value - Random.value);
+                    float randz = (Random.value - Random.value);
+                    Vector3 cone = new Vector3(randx * coneSize, randy*coneSize, randz * coneSize);
+                    var bullet = Instantiate(rangedWeapon.projectile, firePoint.position, new Quaternion(firePoint.rotation.x + cone.x, firePoint.rotation.y+cone.y, firePoint.rotation.z + cone.z, firePoint.rotation.w));
+                    bullet.GetComponent<projectileController>().damage = rangedWeapon.damage;
+                    bullet.GetComponent<projectileController>().range = rangedWeapon.maxRange;
+                }
+            }
         }
         
     }
