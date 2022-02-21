@@ -239,11 +239,15 @@ public class PlayerStateController : MonoBehaviour
         {
             RaycastHit hit = Camera.main.GetComponent<CameraController>().GetCursorHit();
 
-            GetComponent<AttackMovement>()?.Prepare(hit.point);
-            // perform an attack
-            newState = MovementState.attacking;
+            if (!GetComponent<CombatController>().currentWeapon.GetIsRanged())
+            {
+                GetComponent<AttackMovement>()?.Prepare(hit.point);
+                // perform an attack
+                newState = MovementState.attacking;
 
-            idle = false;
+                idle = false;
+            }
+
         }
 
         // if no other condition is met, then player is idle

@@ -106,6 +106,15 @@ public class PlayerMovementController : MonoBehaviour
     }
 
     /// <summary>
+    /// Remove a movement type from the list
+    /// </summary>
+    /// <param name="type"> The type of movement to be added </param>
+    public void RemoveMovementType(MovementType type)
+    {
+        movements.Remove(type);
+    }
+
+    /// <summary>
     /// continually checks if the player is colliding with the ground
     /// </summary>
     public void CheckForGround()

@@ -36,7 +36,7 @@ public class UserData
     /// <summary>
     /// The Keymap of the control system
     /// </summary>
-    public int[] keymap = { (int)KeyCode.W, (int)KeyCode.S, (int)KeyCode.A, (int)KeyCode.D, (int)KeyCode.LeftShift, (int)KeyCode.C, (int)KeyCode.E, (int)KeyCode.Mouse1, (int)KeyCode.Mouse0, (int)KeyCode.Space, (int)KeyCode.Escape };
+    public int[] keymap = { (int)KeyCode.D, (int)KeyCode.A, (int)KeyCode.W, (int)KeyCode.S, (int)KeyCode.LeftShift, (int)KeyCode.C, (int)KeyCode.E, (int)KeyCode.Mouse1, (int)KeyCode.Mouse0, (int)KeyCode.Space, (int)KeyCode.Escape };
 
     /// <summary>
     /// Changes the Key for the given action to the given Key.

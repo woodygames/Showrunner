@@ -25,6 +25,9 @@ public class Bridge : Interactable, Observer
     [SerializeField]
     private GameObject bridgeCopy;
 
+    [SerializeField]
+    private GameObject startBlocker, endBlocker;
+
 
     void Start()
     {
@@ -47,7 +50,13 @@ public class Bridge : Interactable, Observer
             gameObject.GetComponent<BridgeAudioController>().PlaySound(BridgeSound.deny);
             return;
         }
-        if (extended) return;
+        if (extended)
+        {
+            startBlocker.SetActive(false);
+            endBlocker.SetActive(false);
+            return;
+        }
+
 
         if (unlocked)
         {
@@ -55,7 +64,6 @@ public class Bridge : Interactable, Observer
         }
         else
         {
-            
             gameObject.GetComponent<BridgeAudioController>().PlaySound(BridgeSound.deny);
         }
     }
@@ -100,9 +108,11 @@ public class Bridge : Interactable, Observer
         gameObject.layer = 6;
 
         if (length == 0)
+        {
             return;
+        }
         extended = true;
-       
+
         GameObject subBridge = Instantiate(bridgeCopy, gameObject.transform.position,
           bridgeCopy.transform.rotation, this.gameObject.transform.parent.gameObject.transform);
         Bridge subBridgeScript = subBridge.GetComponentInChildren<Bridge>();
