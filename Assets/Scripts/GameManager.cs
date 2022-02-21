@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -36,7 +37,13 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private SettingsMenu settingsMenu;
 
-    public void Awake()
+    /// <summary>
+    /// True if the game is running false if not.
+    /// </summary>
+    private bool gameStartet = false;
+
+    #region Standard Methods
+    void Awake()
     {
         if (GameManager.singleton != null)
         {
@@ -45,7 +52,17 @@ public class GameManager : MonoBehaviour
         }
         GameManager.singleton = this;
         GameObject.DontDestroyOnLoad(this);
+        timeRemaining = time;
     }
+
+    void Update()
+    {
+        if (gameStartet)
+        {
+            UpdateTime();
+        }
+    }
+    #endregion
 
     private void Start()
     {
@@ -57,6 +74,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void StartGame()
     {
+        gameStartet = true;
         Menu.singleton.gameObject.SetActive(false);
         SceneManager.LoadScene(gameScene, LoadSceneMode.Single);
     }
@@ -66,6 +84,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void FinishGame()
     {
+        gameStartet = false;
         settingsMenu.Close();
         SceneManager.LoadScene(mainMenuScene, LoadSceneMode.Single);
         Menu.singleton.gameObject.SetActive(true);
@@ -103,5 +122,44 @@ public class GameManager : MonoBehaviour
             Camera.main.GetComponent<CameraController>().SwitchTarget();
         }
     }
+    
+    #region Time Manageement
+    /// <summary>
+    /// Time availlable for the game
+    /// </summary>
+    [SerializeField]
+    private float time = 180f;
 
+    /// <summary>
+    /// The Time remaining until the game is finished
+    /// </summary>
+    private float timeRemaining;
+
+    /// <summary>
+    /// The TextField for the time.
+    /// </summary>
+    [SerializeField]
+    private TMP_Text timeText;
+
+    /// <summary>
+    /// Updates the timer (also in the UI)
+    /// </summary>
+    private void UpdateTime()
+    {
+        timeRemaining -= Time.deltaTime;
+        if(timeRemaining <= 0)
+        {
+            timeText.text = "";
+            timeRemaining = time;
+            FinishGame();
+        }
+        else
+        {
+            float minutes = Mathf.FloorToInt(timeRemaining / 60);
+            float seconds = Mathf.FloorToInt(timeRemaining % 60);
+            timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        }
+    }
+
+    #endregion
 }
