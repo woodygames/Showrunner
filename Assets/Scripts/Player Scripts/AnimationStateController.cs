@@ -89,7 +89,6 @@ public class AnimationStateController : MonoBehaviour
 
         MapMoveDirectionToBlendTree();
         animator.SetBool("IsRunning", input.running);
-        animator.GetBool("IsRunning");
 
         if (animator.GetFloat("HorizontalDirection") == float.NaN || animator.GetFloat("VerticalDirection") == float.NaN)
         {

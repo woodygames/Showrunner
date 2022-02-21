@@ -44,6 +44,11 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            SwitchTarget();
+        }
+
         HandleCamera();
     }
 
@@ -77,5 +82,13 @@ public class CameraController : MonoBehaviour
         Physics.Raycast(ray, out hit);
 
         return hit;
+    }
+
+    /// <summary>
+    /// Changes the target to be followed by the camera
+    /// </summary>
+    public void SwitchTarget()
+    {
+        target = GameManager.singleton.GetNextTarget();
     }
 }
