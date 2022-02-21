@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70056f51e3c22e3408b7df17fee41d63, type: 3}
+  m_Name: shotgun
+  m_EditorClassIdentifier: 
+  damage: 3
+  attackRate: 3
+  magSize: 5
+  magReload: 4
+  projectile: {fileID: 2609755650496969728, guid: e003fd1ae7778c145ba6aa622b0d9670, type: 3}
+  muzzleFlash: {fileID: 7254020355249169054, guid: 290d3fa2c17f3394fabf952b6080e635, type: 3}
+  maxRange: 5
+  coneSize: 0.2
+  usePelletMode: 1
+  pelletCount: 20
+  isRanged: 1
+  weaponModel: {fileID: 4460203557497132785, guid: 089ec3b664b2f6742bc674a94780b8eb, type: 3}
+  weaponPhysicalItem: {fileID: 4460203557497132785, guid: 7bcd48fab7ba1c14ba1ef19be03789ed, type: 3}

@@ -20,6 +20,9 @@ public class projectileController : MonoBehaviour
     [SerializeField]
     private GameObject enviromentHit;
 
+    [SerializeField]
+    private bool isPlayer = false;
+
     private void Start()
     {
         RaycastHit hit;
@@ -56,15 +59,21 @@ public class projectileController : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, bulletSpeed*Time.fixedDeltaTime, layerMask))
         {
-            if (hit.collider.gameObject.GetComponent<HealthController>())
+            if (hit.collider.gameObject.GetComponent<HealthController>()&&!isPlayer)
             {
                 hit.collider.gameObject.GetComponent<HealthController>().ChangeHealth(-damage);
                 Instantiate(playerHit, hit.point, Quaternion.identity);
                 Destroy(gameObject);
             }
+            else if(hit.collider.GetComponent<EnemyHealthController>()&&isPlayer)
+            {
+                hit.collider.gameObject.GetComponent<EnemyHealthController>().ChangeHealth(-damage);
+                Instantiate(playerHit, hit.point, Quaternion.identity);
+                Destroy(gameObject);
+            }
             else
             {
-                Instantiate(enviromentHit,hit.point,Quaternion.identity);
+                Instantiate(enviromentHit, hit.point, Quaternion.identity);
                 Destroy(gameObject);
             }
         }
