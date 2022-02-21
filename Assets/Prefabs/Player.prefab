@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 6204114616637903277}
   - component: {fileID: 3432937419827733604}
   - component: {fileID: 681305977983847191}
-  - component: {fileID: 8019369724516505231}
+  - component: {fileID: 2188172703788279352}
   - component: {fileID: 967751338813494937}
   - component: {fileID: 4885639651816845770}
   m_Layer: 0
@@ -216,7 +216,7 @@ MonoBehaviour:
   changeTo: 4
   dashForce: 5
   dashDuration: 0.3
---- !u!114 &8019369724516505231
+--- !u!114 &2188172703788279352
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -229,6 +229,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   changeTo: 5
+  dashForce: 5
+  dashDuration: 0.3
 --- !u!114 &967751338813494937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,6 +308,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7190501988136300736, guid: 1f1f06a8a91ed924fa2a6ce1c935d232, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2be2269311dcdad40964d759a0b8c67e, type: 2}
+    - target: {fileID: -7190501988136300736, guid: 1f1f06a8a91ed924fa2a6ce1c935d232, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9dba38ed1bfd5a343ab31e91a3f8131a, type: 2}
+    - target: {fileID: -7190501988136300736, guid: 1f1f06a8a91ed924fa2a6ce1c935d232, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2be2269311dcdad40964d759a0b8c67e, type: 2}
+    - target: {fileID: -7190501988136300736, guid: 1f1f06a8a91ed924fa2a6ce1c935d232, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9dba38ed1bfd5a343ab31e91a3f8131a, type: 2}
     - target: {fileID: 919132149155446097, guid: 1f1f06a8a91ed924fa2a6ce1c935d232, type: 3}
       propertyPath: m_Name
       value: TimeJamCharacter

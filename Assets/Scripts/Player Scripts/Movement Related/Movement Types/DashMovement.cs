@@ -22,6 +22,7 @@ public class DashMovement : MovementType
     public override void Move(bool isGrounded)
     {
         Vector3 direction = Vector3.right * input.horizontal + Vector3.forward * input.vertical;
+        print(direction.magnitude);
         playerMovement.AddForce(direction * dashForce, dashDuration);
     }
 }

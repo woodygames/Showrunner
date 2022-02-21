@@ -35,6 +35,8 @@ public abstract class Interactable : MonoBehaviour
         }
     }
 
+    public abstract bool OutlineIsRed();
+
     /// <summary>
     /// Called by clicking on the interactable.
     /// </summary>

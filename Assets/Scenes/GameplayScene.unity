@@ -5771,7 +5771,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8019369724516505231, guid: 31ed9b1a8ab44d44a959d29938de4310, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 31ed9b1a8ab44d44a959d29938de4310, type: 3}
 --- !u!4 &971277751 stripped
 Transform:

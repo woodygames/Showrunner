@@ -168,7 +168,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 1
-      scalar: 0.25
+      scalar: 0.35
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -713,15 +713,15 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 16
+    type: 5
     angle: 25
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
     donutRadius: 0.2
-    m_Position: {x: -0.1, y: 0.03, z: -0.25}
+    m_Position: {x: 0.06, y: 0.08, z: -0.44}
     m_Rotation: {x: 0, y: 90, z: 0}
-    m_Scale: {x: -1.46, y: 0.05, z: 0.18}
+    m_Scale: {x: -3, y: 0.05, z: 0.18}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -919,7 +919,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 300
+      scalar: 100
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -4873,11 +4873,15 @@ GameObject:
   - component: {fileID: 2948776187725556292}
   - component: {fileID: 6913697156999076930}
   - component: {fileID: 2720030689229846753}
-  - component: {fileID: 9194612267461220262}
   - component: {fileID: 429750277047672748}
   - component: {fileID: 7783600685508882716}
   - component: {fileID: 412851672835059536}
-  m_Layer: 0
+  - component: {fileID: 6184953373246989753}
+  - component: {fileID: 3229935639806411348}
+  - component: {fileID: 2945149325423683149}
+  - component: {fileID: 5293986309979441694}
+  - component: {fileID: 5488120932842042075}
+  m_Layer: 10
   m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4893,7 +4897,7 @@ Transform:
   m_GameObject: {fileID: 3741598632683277201}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6029461872138290058}
   - {fileID: 5013446166014869807}
@@ -4990,21 +4994,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6c91660ee497934284e91744b5a58aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 0
+  range: 3
   interactables: []
---- !u!65 &9194612267461220262
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3741598632683277201}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.019999998, y: 0.0025126657, z: 0.020000007}
-  m_Center: {x: 0, y: 0.00086684065, z: 0}
+  collider: {fileID: 6184953373246989753}
 --- !u!114 &429750277047672748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5127,6 +5119,72 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!65 &6184953373246989753
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3741598632683277201}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.9999998, y: 0.5025331, z: 4.0000014}
+  m_Center: {x: 0, y: 0.17336813, z: 0}
+--- !u!65 &3229935639806411348
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3741598632683277201}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.99999964, y: 0.5025331, z: 4.0000014}
+  m_Center: {x: 1.5, y: 0.17336813, z: -6.8735284e-16}
+--- !u!65 &2945149325423683149
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3741598632683277201}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.99999964, y: 0.5025331, z: 4.0000014}
+  m_Center: {x: -1.5, y: 0.17336813, z: -6.8735284e-16}
+--- !u!65 &5293986309979441694
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3741598632683277201}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.9999998, y: 0.5025331, z: 1.0000025}
+  m_Center: {x: 0, y: 0.17336813, z: 1.4999998}
+--- !u!114 &5488120932842042075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3741598632683277201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01b0e1ce65cbb1d44b607d88f6c9c20a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  storeInTexcoordChannel: 1
+  cospatialVertexDistance: 0.01
 --- !u!1 &5002603411707835534
 GameObject:
   m_ObjectHideFlags: 0
@@ -5295,7 +5353,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 1
-      scalar: 0.25
+      scalar: 0.35
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -5840,15 +5898,15 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 16
+    type: 5
     angle: 25
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
     donutRadius: 0.2
-    m_Position: {x: 0.08, y: 0.03, z: -0.25}
-    m_Rotation: {x: -180, y: 90, z: 0}
-    m_Scale: {x: -1.46, y: 0.05, z: 0.18}
+    m_Position: {x: -0.07, y: 0.03, z: -0.45}
+    m_Rotation: {x: -180, y: 88.51, z: 0}
+    m_Scale: {x: 2.93, y: 0, z: 0.18}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -6046,7 +6104,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 300
+      scalar: 100
       minScalar: 10
       maxCurve:
         serializedVersion: 2
